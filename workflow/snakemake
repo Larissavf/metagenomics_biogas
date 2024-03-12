@@ -2,19 +2,34 @@ import os
 import glob
 
 
-SAMPLES = [os.path.basename(x).rstrip(".fastq") for x in glob.glob("/students/2023-2024/Thema07/biogas/fastq/*")]
+SAMPLES_b = [os.path.basename(x).rstrip(".fastq") for x in glob.glob("/commons/Themas/Thema07/metagenomics/biogas/TBR_M3_B2/Boven2/20220728_1612_MN36331_FAT64465_c641c8e0/fastq/pass/*")]
+SAMPLES_m = [os.path.basename(x).rstrip(".fastq") for x in glob.glob("/commons/Themas/Thema07/metagenomics/biogas/TBR_M3_B2/Midden3/20220728_1612_MN28083_FAT74352_83059c82/fastq/pass/*")]
+SAMPLES_p = [os.path.basename(x).rstrip(".fastq") for x in glob.glob("/commons/Themas/Thema07/metagenomics/biogas/TBR_P2_O1/Pacques2/20220727_1357_MN28083_FAT74352_1c4d8c39/fastq/pass/*")]
+SAMPLES_o = [os.path.basename(x).rstrip(".fastq") for x in glob.glob("/commons/Themas/Thema07/metagenomics/biogas/TBR_P2_O1/Onder1/20220727_1357_MN36331_FAT64465_a35d4b1f/fastq/pass/*")]
+
+
+
 
 rule all:
     input:
-        expand('/students/2023-2024/Thema07/biogas/qc/fastqc/{sample}.html', sample = SAMPLES)
+        expand('/students/2023-2024/Thema07/biogas/qc/fastqc/b_{sample_b}.html', sample_b = SAMPLES_b)
+        expand('/students/2023-2024/Thema07/biogas/qc/fastqc/m_{sample_m}.html', sample_m = SAMPLES_m)
+        expand('/students/2023-2024/Thema07/biogas/qc/fastqc/p_{sample_p}.html', sample_p = SAMPLES_p)
+        expand('/students/2023-2024/Thema07/biogas/qc/fastqc/o_{sample_o}.html', sample_o = SAMPLES_o)
 
 
 rule fastqc:
     input:
-        '/students/2023-2024/Thema07/biogas/fastq/{sample}.fastq'
+        '/commons/Themas/Thema07/metagenomics/biogas/TBR_M3_B2/Boven2/20220728_1612_MN36331_FAT64465_c641c8e0/fastq/pass/{sample_b}.fastq'
+        '/commons/Themas/Thema07/metagenomics/biogas/TBR_M3_B2/Midden3/20220728_1612_MN28083_FAT74352_83059c82/fastq/pass/{sample_m}.fastq'
+        '/commons/Themas/Thema07/metagenomics/biogas/TBR_P2_O1/Pacques2/20220727_1357_MN28083_FAT74352_1c4d8c39/fastq/pass/{sample_p}.fastq'
+        '/commons/Themas/Thema07/metagenomics/biogas/TBR_P2_O1/Onder1/20220727_1357_MN36331_FAT64465_a35d4b1f/fastq/pass/{sample_o}.fastq'
 
     output:
-        '/students/2023-2024/Thema07/biogas/qc/fastqc/{sample}.html'
+        '/students/2023-2024/Thema07/biogas/qc/fastqc/b_{sample_b}.html'
+        '/students/2023-2024/Thema07/biogas/qc/fastqc/m_{sample_m}.html'
+        '/students/2023-2024/Thema07/biogas/qc/fastqc/p_{sample_p}.html'
+        '/students/2023-2024/Thema07/biogas/qc/fastqc/o_{sample_o}.html'
 
     shell:
         'fastqc {input} --outdir /students/2023-2024/Thema07/biogas/qc/fastqc/'
