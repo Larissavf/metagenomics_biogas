@@ -1,11 +1,53 @@
-import os
-import glob
 
 
-SAMPLES_b = [os.path.basename(x).rstrip(".fastq") for x in glob.glob("/commons/Themas/Thema07/metagenomics/biogas/TBR_M3_B2/Boven2/20220728_1612_MN36331_FAT64465_c641c8e0/fastq/pass/*")]
-SAMPLES_m = [os.path.basename(x).rstrip(".fastq") for x in glob.glob("/commons/Themas/Thema07/metagenomics/biogas/TBR_M3_B2/Midden3/20220728_1612_MN28083_FAT74352_83059c82/fastq/pass/*")]
-SAMPLES_p = [os.path.basename(x).rstrip(".fastq") for x in glob.glob("/commons/Themas/Thema07/metagenomics/biogas/TBR_P2_O1/Pacques2/20220727_1357_MN28083_FAT74352_1c4d8c39/fastq/pass/*")]
-SAMPLES_o = [os.path.basename(x).rstrip(".fastq") for x in glob.glob("/commons/Themas/Thema07/metagenomics/biogas/TBR_P2_O1/Onder1/20220727_1357_MN36331_FAT64465_a35d4b1f/fastq/pass/*")]
+rule minionqc:
+    input:
+        fastq_b='/commons/Themas/Thema07/metagenomics/biogas/TBR_M3_B2/Boven2/20220728_1612_MN36331_FAT64465_c641c8e0/fastq/pass/{sample_b}.fastq',
+        fastq_m='/commons/Themas/Thema07/metagenomics/biogas/TBR_M3_B2/Midden3/20220728_1612_MN28083_FAT74352_83059c82/fastq/pass/{sample_m}.fastq',
+        fastq_p='/commons/Themas/Thema07/metagenomics/biogas/TBR_P2_O1/Pacques2/20220727_1357_MN28083_FAT74352_1c4d8c39/fastq/pass/{sample_p}.fastq',
+        fastq_o='/commons/Themas/Thema07/metagenomics/biogas/TBR_P2_O1/Onder1/20220727_1357_MN36331_FAT64465_a35d4b1f/fastq/pass/{sample_o}.fastq'
+
+    output:
+        'minionqc_output/'
+
+    params:
+        r_script='miniqc.R',
+        qscore_cutoff=13
+
+    script:
+        """
+        library(MinionQC)
+
+       
+        fastq_b <- "{input.fastq_b}"
+        fastq_m <- "{input.fastq_m}"
+        fastq_p <- "{input.fastq_p}"
+        fastq_o <- "{input.fastq_o}"
+        
+        output_dir <- "{output}"
+
+        MinionQC(fastq_b, output_dir, qscore_cutoff={params.qscore_cutoff})
+        MinionQC(fastq_m, output_dir, qscore_cutoff={params.qscore_cutoff})
+        MinionQC(fastq_p, output_dir, qscore_cutoff={params.qscore_cutoff})
+        MinionQC(fastq_o, output_dir, qscore_cutoff={params.qscore_cutoff})
+        """
+
+         
+         
+         ' 
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
