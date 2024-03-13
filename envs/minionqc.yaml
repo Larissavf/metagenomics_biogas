@@ -1,0 +1,8 @@
+name: quality
+
+channels:
+  - bioconda
+  - conda-forge
+
+dependencies:
+  - MinionQC
