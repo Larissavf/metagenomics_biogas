@@ -1,0 +1,5 @@
+seqsum_file:
+  - '/commons/Themas/Thema07/metagenomics/biogas/TBR_M3_B2/Boven2/20220728_1612_MN36331_FAT64465_c641c8e0/fastq/sequencing_summary_FAT64465_e6d42c3d.txt'
+  - '/commons/Themas/Thema07/metagenomics/biogas/TBR_M3_B2/Midden3/20220728_1612_MN28083_FAT74352_83059c82/fastq/sequencing_summary_FAT74352_ad15cfb9.txt'
+  - '/commons/Themas/Thema07/metagenomics/biogas/TBR_P2_O1/Pacques2/20220727_1357_MN28083_FAT74352_1c4d8c39/fastq/sequencing_summary_FAT74352_b58cd7ca.txt'
+  - '/commons/Themas/Thema07/metagenomics/biogas/TBR_P2_O1/Onder1/20220727_1357_MN36331_FAT64465_a35d4b1f/fastq/sequencing_summary_FAT64465_a0142bb4.txt'
