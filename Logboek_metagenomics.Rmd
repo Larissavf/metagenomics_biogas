@@ -24,11 +24,19 @@ Stappen:
 
 - NanoQC
 
-- Nanoplot
+- NanoPlot
 
 ### Trimming
 
-- Nanoplot
+Voor het trimmen is er gekozen om de tool NanoPlot te gebruiken, deze tool kan namelijk goed met langere reads werken. 
+Doordat het miniondata is en we hierdoor dus lange lengtes door hebben.
+Voor het trimmen kiezen we om de lengtes iets in tekorten doordat de quality in de laatst 20 baseparen heel veel lager wordt. 
+Hetzelfde geldt in de eerste 40 basenparen van de reads.
+
+  --maxlength          Hide reads longer than length specified.
+  --minlength 40         Hide reads shorter than length specified.
+
+- NanoPlot
 
 ### Alignment
 
