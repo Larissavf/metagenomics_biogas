@@ -3,8 +3,20 @@ configfile: 'config/config.yaml'
 
 rule nanoplot_qc:
     input:
+<<<<<<< Updated upstream
         expand('{dir}.sequencing_summary.txt', dir=configfile['DIR']
+=======
+        expand('{dir}', dir=configfile['fastq_file'])
+>>>>>>> Stashed changes
     output:
         'NanoPlot-report.html'
     shell:
+<<<<<<< Updated upstream
         'Nanoplot --summary {dir}.sequencing_summary.txt -o /students/2023-2024/Thema07/biogas/qc/'
+=======
+        'Nanoplot --fastq {input} -o {output}'
+
+  --maxlength N         Hide reads longer than length specified.
+  --minlength N         Hide reads shorter than length specified.
+  --minqual N           Drop reads with an average quality lower than specified.
+>>>>>>> Stashed changes
