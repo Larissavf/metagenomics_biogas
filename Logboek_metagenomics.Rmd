@@ -28,13 +28,15 @@ Stappen:
 
 ### Trimming
 
-Voor het trimmen is er gekozen om de tool NanoPlot te gebruiken, deze tool kan namelijk goed met langere reads werken. 
+Voor het trimmen is er gekozen om de tool chopper van NanoPack te gebruiken, deze tool kan namelijk goed met langere reads werken. 
 Doordat het miniondata is en we hierdoor dus lange lengtes door hebben.
 Voor het trimmen kiezen we om de lengtes iets in tekorten doordat de quality in de laatst 20 baseparen heel veel lager wordt. 
 Hetzelfde geldt in de eerste 40 basenparen van de reads.
 
-  --maxlength          Hide reads longer than length specified.
-  --minlength 40         Hide reads shorter than length specified.
+  --headcrop 40     Trim N nucleotides from the start of a read [default: 0]
+  --quality 22       Sets a minimum Phred average quality score [default: 0]
+  --tailcrop 20     Trim N nucleotides from the end of a read [default: 0]
+
 
 - NanoPlot
 
