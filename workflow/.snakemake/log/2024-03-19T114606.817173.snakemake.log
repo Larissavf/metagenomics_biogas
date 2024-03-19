@@ -1,0 +1,34 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Job stats:
+job            count
+-----------  -------
+nanochopper        1
+total              1
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Tue Mar 19 11:46:07 2024]
+localrule nanochopper:
+    input: /commons/docent/Thema07/metagenomics/biogas/TBR_P2_O1/Pacques2/20220727_1357_MN28083_FAT74352_1c4d8c39/fastq/pass/fastq_runid_b58cd7ca3fd1b2ef201791d16538587fbf47de31_98_0.fastq
+    output: /students/2023-2024/Thema07/biogas/qc/chopper
+    jobid: 0
+    reason: Missing output files: /students/2023-2024/Thema07/biogas/qc/chopper
+    resources: tmpdir=/tmp
+
+Terminating processes on user request, this might take some time.
+[Tue Mar 19 11:50:58 2024]
+Error in rule nanochopper:
+    jobid: 0
+    input: /commons/docent/Thema07/metagenomics/biogas/TBR_P2_O1/Pacques2/20220727_1357_MN28083_FAT74352_1c4d8c39/fastq/pass/fastq_runid_b58cd7ca3fd1b2ef201791d16538587fbf47de31_98_0.fastq
+    output: /students/2023-2024/Thema07/biogas/qc/chopper
+    shell:
+        chopper --headcrop 40 --tailcrop 20 --quality 22
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Complete log: .snakemake/log/2024-03-19T114606.817173.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.
