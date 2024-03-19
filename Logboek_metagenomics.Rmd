@@ -1,0 +1,66 @@
+---
+title: "Logboek"
+author: "Larissa, Marissa, Sven"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# Logboek
+Op volgorde:
+
+Stappen:
+- Quality control
+- Trimming
+- Quality control
+- Alignment
+- Annotation
+- Mapping
+- Binning (grouping reads and assigning to individual genome):
+- Manipulating alignment
+- Variant calling
+- Graphs
+
+### Quality control
+
+- NanoQC
+
+- Nanoplot
+
+### Trimming
+
+- Nanoplot
+
+### Alignment
+
+- Megahit
+- MetaSPAdes
+
+### Annotation
+
+- Prokka
+
+### Mapping
+
+- Bowtie2 
+- BWA 
+
+### Binning
+
+- Metabat2
+- Maxbin
+
+### Manipulating alignment
+
+- SAMtools 
+
+### Variant calling
+
+- BCFTOOLS 
+
+### Graphs
+
+- Nog geen idee
+
+## README 
+
+Nanoplot dowload
