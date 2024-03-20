@@ -1,0 +1,48 @@
+import os
+configfile: 'config/config.yaml'
+
+d = {}
+for sample_name in config['test']:
+    basename = os.path.splitext(sample_name)
+    basename = os.path.basename(basename[0])
+    d[basename] = sample_name
+
+OD = config["output_dir"]
+
+rule all:
+    input:
+        expand(OD +'qc/nanofilt/{sample}.fastq', sample=list(d.keys())),
+        OD + 'qc/nanoqc/{sample}.html'
+
+
+rule nanoqc:
+    input:
+        lambda wildcards: d[wildcards.sample]
+    output:
+        OD + 'qc/nanoqc/{sample}.html'
+    params:
+        x_axis = "20",
+        y_axis = "20"
+    shell:
+        "nanoQC -o {output} {input}"
+
+rule nanofilt:
+    input:
+        lambda wildcards: d[wildcards.sample]
+    output:
+        OD + 'qc/nanofilt/{sample}.fastq'
+    shell:
+        'NanoFilt --headcrop 40 --tailcrop 20 --quality 15 {input} > {output}' 
+
+
+
+# rule kraken2:
+#     input:
+#         directory('/students/2023-2024/Thema07/biogas/qc/chopper')
+#     output:
+#         directory('/students/2023-2024/Thema07/biogas/taxonomy/k2_output.txt')
+#     shell:
+#         'KRAKEN2_DEFAULT_DB="/data/datasets/KRAKEN2_INDEX/k2_standard_20231009"'
+#         'kraken2 --db Standard --report k2_report.txt --output {output} {input}'
+
+
