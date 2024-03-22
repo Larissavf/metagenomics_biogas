@@ -1,0 +1,76 @@
+---
+title: "Logboek"
+author: "Larissa, Marissa, Sven"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# Logboek
+Op volgorde:
+
+Stappen:
+- Quality control
+- Trimming
+- Quality control
+- Alignment
+- Annotation
+- Mapping
+- Binning (grouping reads and assigning to individual genome):
+- Manipulating alignment
+- Variant calling
+- Graphs
+
+### Quality control
+
+- NanoQC
+
+- NanoPlot
+
+### Trimming
+
+Voor het trimmen is er gekozen om de tool chopper van NanoPack te gebruiken, deze tool kan namelijk goed met langere reads werken. 
+Doordat het miniondata is en we hierdoor dus lange lengtes door hebben.
+Voor het trimmen kiezen we om de lengtes iets in tekorten doordat de quality in de laatst 20 baseparen heel veel lager wordt. 
+Hetzelfde geldt in de eerste 40 basenparen van de reads.
+
+  --headcrop 40     Trim N nucleotides from the start of a read [default: 0]
+  --quality 22       Sets a minimum Phred average quality score [default: 0]
+  --tailcrop 20     Trim N nucleotides from the end of a read [default: 0]
+
+
+- NanoPlot
+
+### Alignment
+
+- Megahit
+- MetaSPAdes
+
+### Annotation
+
+- Prokka
+
+### Mapping
+
+- Bowtie2 
+- BWA 
+
+### Binning
+
+- Metabat2
+- Maxbin
+
+### Manipulating alignment
+
+- SAMtools 
+
+### Variant calling
+
+- BCFTOOLS 
+
+### Graphs
+
+- Nog geen idee
+
+## README 
+
+Nanoplot dowload
