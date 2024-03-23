@@ -36,7 +36,7 @@ Quality control & Trimming using Nanopack
 
 Voor de quality control en het trimmen van de reads zijn de tools NanoQC en NanoFilt tools gebruikt afkomstig van NanoPack. NanoPack bevat tools geschikt voor NanoPore data.
 
-NanoQC is gebruikt om quality reports te genereren om op basis daarvan de reads te gaan trimmen. De NanoQC reports toonden aan dat de eerste 40 baseparen en de laatste 20 baseparen zeer slecht scoorden. Om deze reden is ervoor gekozen om met headcrop en tailcrop deze baseparen te verwijderen. Verder is er een minimum Phred score ingesteld van 22.Hiervoor is de volgende shell command gebruikt:
+NanoQC is gebruikt om quality reports te genereren om op basis daarvan de reads te gaan trimmen. De NanoQC reports toonden aan dat de eerste 40 baseparen en de laatste 20 baseparen zeer slecht scoorden. Om deze reden is ervoor gekozen om met headcrop en tailcrop deze baseparen te verwijderen. Verder is er een minimum Phred score ingesteld van 15.Hiervoor is de volgende shell command gebruikt:
 
 NanoFilt --headcrop 40 --tailcrop 20 --quality 15 {input} > {output}'
 
