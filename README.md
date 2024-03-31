@@ -40,7 +40,7 @@ Een bijpassende onderzoeksvraag zou als volgt kunnen zijn:
 achtergrondinfo over de bacterien en waar we naar kijken.
 
 __De pipeline__  
-wat is de input
+wat is de input  
 workflow  
 
 ## Project structuur
@@ -50,5 +50,5 @@ workflow
 Voor verdere vragen kan je terecht bij de makers van deze repo.
 
 Larissa Voshol: l.voshol@st.hanze.nl  
-Marian Hasan: m.hasan@st.hanze.nl
+Marian Hasan: m.hasan@st.hanze.nl  
 Sven Schoonen: s.schoonen@st.hanze.nl
