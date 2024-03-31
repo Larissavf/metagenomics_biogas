@@ -1,7 +1,0 @@
-Building DAG of jobs...
-MissingInputException in rule fastqc in file /homes/mhasan/PycharmProjects/biogas/metagenomics_biogas/workflow/snakemake, line 12:
-Missing input files for rule fastqc:
-    output: /students/2023-2024/Thema07/biogas/qc/fastqc/m_{sample_m}.html
-    wildcards: sample=m_{sample_m}
-    affected files:
-        /students/2023-2024/Thema07/biogas/fastq/m_{sample_m}.fastq
