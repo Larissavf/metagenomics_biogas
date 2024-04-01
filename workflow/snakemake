@@ -8,7 +8,7 @@ for sample_name in config['test']:
     d[basename] = sample_name
 
 OD = config["output_dir"]
-samples = list(d.keys()))
+samples = list((d.keys()))
 
 rule all:
     input:
