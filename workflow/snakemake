@@ -6,6 +6,6 @@ rule human3:
         "human3/"
     shell:
         """
-        humann_databases --download uniref uniref50_ec_filtered_diamond reduced ../databases &&
+        humann_databases --download uniref uniref50_ec_filtered_diamond reduced /students/2023-2024/Thema07/biogas/test &&
         humann --input {input.input_fasta} --output {output} --nucleotide-database ~/miniconda3/envs/Metagenomics/lib/python3.12/site-packages/metaphlan/chocophlan
         """
