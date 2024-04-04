@@ -1,7 +1,8 @@
+#human3 is a package in biobakery
 rule human3:
     input:
         input_fasta = '/students/2023-2024/Thema07/biogas/test/demo.fastq.gz'
     output:
         "human3/"
     shell:
-        "humann --input {input_fasta}  --output {output}"
+        "humann --input {input.input_fasta}  --output {output}"
