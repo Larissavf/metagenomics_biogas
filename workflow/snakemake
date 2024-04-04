@@ -5,4 +5,7 @@ rule human3:
     output:
         "human3/"
     shell:
-        "humann --input {input.input_fasta}  --output {output}"
+        """
+        humann_databases --download uniref reduced ../databases &&
+        humann --input {input.input_fasta} --output {output} --nucleotide-database ~/miniconda3/envs/Metagenomics/lib/python3.12/site-packages/metaphlan/chocophlan
+        """
