@@ -18,8 +18,19 @@ __Start env__
 `
 conda env create --file environment.yml
 `  
-### Usage   
-De pipeline is samengesteld in snakemake, je moet het dus via snakemake runnen.  
+### Usage
+De pipeline is samengesteld in snakemake, je moet het dus via snakemake runnen. 
+
+Maar voordat je hem wilt runnen moet je de volgende stappen hebben uitgevoerd.
+
+__Opstarten conda env__  
+`
+Conda activate env.yaml 
+`
+__Install diamond__
+Github repo:
+Plaats het op de locatie waar ook de snakemake file staat.
+
 __Run Snakemake__  
 `
 snakemake --snakefile Snakemake -c 2
