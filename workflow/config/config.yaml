@@ -21,6 +21,12 @@ kraken-bracken: '/homes/mhasan/PycharmProjects/biogas/metagenomics_biogas/Kraken
 
 kraken_db: 'data/datasets/KRAKEN2_INDEX/k2_standard_20231009/'
 
+minimap_index: '/data/datasets/MINIMAP2_INDEX/refseq_bacteria_archaea.mmi'
+
+choco: /students/2023-2024/Thema07/biogas/metaphlan/chocophlan
+
+uniref: /students/2023-2024/Thema07/biogas/metaphlan/uniref
+
 samples:
   - Boven
   - Midden

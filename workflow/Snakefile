@@ -19,15 +19,15 @@ rule all:
    input:
         # expand(OD + 'taxonomy/{sample}_output.txt', sample=samples),
     #    OD +'visualisation/bracken.pdf',
-         expand(OD +'qc/nanoqc/{sample}.html', sample=samples),
-    #    expand(OD + 'human3/{sample}', sample=samples)
+        #  expand(OD +'qc/nanoqc/{sample}', sample=samples),
+        expand(OD + 'human3/{sample}', sample=samples)
 
 
 rule nanoqc:
    input:
        lambda wildcards: d[wildcards.sample]
    output:
-       OD+'qc/nanoqc/{sample}.html'
+       directory(OD+'qc/nanoqc/{sample}')
    shell:
        'nanoQC -o {output} {input}'
 
@@ -37,7 +37,7 @@ rule nanofilt:
    output:
        OD + 'qc/nanofilt/{sample}.fastq'
    shell:
-       'NanoFilt --headcrop 40 --tailcrop 20 --quality 15 {input} > {output}' 
+       'NanoFilt --headcrop 40 --tailcrop 20 --quality 10 {input} > {output}' 
 
 rule kraken2:
    input:
@@ -49,17 +49,32 @@ rule kraken2:
    shell:
        'kraken2 --db /data/datasets/KRAKEN2_INDEX/k2_standard_20231009/ --report {log} --output {output} {input}'
 
+rule minimap2_sam:
+    input:
+        target= config['minimap_index'],
+        query= OD + 'qc/nanofilt/{sample}.fastq'
+    output:
+        OD + "aligned/{sample}_aln.sam"
+    log:
+        OD + "log/minimap2/{sample}.log"
+    shell:
+        'minimap2 -ax map-ont {input.target} {input.query} > {output}'
 
 
-#human3 is a package in biobakery
-# rule human3:
-#    input:
-#        OD + 'qc/nanofilt/{sample}.fastq'
-#    output:
-#        directory(OD + 'human3/{sample}')
-#    shell:
-#     #    "humann_databases --download chocophlan reduced ../ | "
-#        "humann --input {input} --output {output} --nucleotide-database ~/miniconda3/envs/Metagenomics/lib/python3.12/site-packages/metaphlan/chocophlan"
+
+# human3 is a package in biobakery
+rule human3:
+   input:
+        OD + 'qc/nanofilt/{sample}.fastq'
+   output:
+       directory(OD + 'human3/{sample}')
+   shell:
+    #    "humann_databases --download chocophlan full {config["choco"]} && "
+    #    "humann_databases --download uniref uniref50_ec_filtered_diamond reduced {config["uniref"]} && "
+        "humann --input {input} --output {output} --nucleotide-database {config[choco]} --protein-database {config[uniref]}"
+    #    "humann --input {input} --output {output} --nucleotide-database ~/miniconda3/envs/Metagenomics/lib/python3.12/site-packages/metaphlan/chocophlan"
+
+
 
 # rule bracken:
 #     input:
