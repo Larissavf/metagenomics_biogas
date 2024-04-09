@@ -1,5 +1,5 @@
 # metagenomics_biogas
-##### Larissa Voshol, Marian Hassan & Sven Schoonen | 31-03-2024 | Bio informatica 2 | versie 1
+##### Larissa Voshol, Marian Hasan & Sven Schoonen | 31-03-2024 | Bio informatica 2 | versie 1
 
 ## Purpose  
 Dit is een pipeline voor een Metagenomics onderzoek. Er wordt hier gekeken naar minION reads, deze worden gerecalibreert vervolgens wordt er met kraken2 en biobakery gekeken naar de inhoud van de samples.
