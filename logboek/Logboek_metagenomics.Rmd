@@ -1,37 +1,48 @@
 ---
+
 title: "Logboek"
+
 author: "Larissa, Marian, Sven"
+
 date: "`r Sys.Date()`"
+
 output: html_document
-editor_options: 
-  markdown: 
-    wrap: 72
+
+editor_options:
+
+markdown:
+
+wrap: 72
+
 ---
 
-__Introductie__:
+Introductie:
 
-Dit logbeok is gemaakt voor een metagenomics onderzoek van de inhoud van een Tricklebed reactor (TBR), die op het lab staat in de hanze. Dit is dan ook in uitvoering gedaan van de groep onderzoekers van dit project. Bij dit project:  
-  
-Is er dus een methode om biogas te produceren onderzocht, Dit wordt gedaan door het omzetten van biomassa in methaan met behulp van microben die zich bevinden in het rumen van koeien. Het rumen is het grootste gedeelte van de maag van een koe.    
-  
-Bij dit proces wordt vloeistof uit het rumen geëxtraheerd en samen met gras in een artificiële rumen reactor (ARR) gebracht. De microben die in de vloeistof afkomstig uit het rumen aanwezig zijn, produceren vervolgens vluchtige vetzuren (VFA's) middels fermentatie, een vorm van anaerobe respiratie. Anaerobe respiratie is een proces waarbij energie wordt geproduceerd in afwezigheid van zuurstof. Bij de fermentatie worden koolhydraten gedegradeerd tot VFA’s. ​Deze VFA's worden geëxtraheerd uit de ARR en in een biogasreactor geplaatst waar de methaan productie door de aanwezige microben plaatsvindt​.    
-  
-De productie van methaan wordt ook wel methanogenese genoemd. Deze microben gebruiken hiervoor waterstof en koolstofdioxide als substraten. De methanogenese reactie is een redoxreactie. Hierbij fungeert waterstof als de elektron donor en wordt deze geoxideerd. Koolstofdioxide wordt tijdens de reactie gereduceerd .   
-  
-Het geproduceerde methaan wordt vervolgens gezuiverd in een Tricklebed reactor (TBR). Naast de zuivering vindt er verdere methanogenese plaats. De methanogenese lijkt echter op sommige momenten te dalen​. Om de reden voor deze daling te achterhalen is er een metagenomics analyse uitgevoerd. Met metagenomics kan het genetisch materiaal van meerdere microben in een keer direct geanalyseerd worden. Hierdoor kan de focus gelegd worden op de functies, compositie en diversiteit van een gemeenschap aan microben, in plaats van het analyseren van individuele microben. Verder wordt metagenomics veel gebruikt omdat het de mogelijkheid bied om microben die moeilijk of niet te kweken zijn toch te bestuderen​.    
+Dit logboek is samengesteld op basis van metagenomics onderzoek naar de inhoud van een Tricklebed reactor afkomstig van het …. lab. Dit onderzoek is in opdracht gedaan voor de onderzoekers van dit lab.
 
+Voor dit project is er onderzoek gedaan naar een methode om biogas te produceren. Dit wordt gedaan door het omzetten van biomassa in methaan met behulp van microben die zich bevinden in het rumen van koeien. Het rumen is het grootste gedeelte van de maag van een koe.
 
-__Onderzoeksvragen__:
-> De bacterieele community in deze reactor veranderd ook door de tijd, en dit heeft functionele gevolgen: soms valt de methaanproductie uit, of wordt de mix van, methaan en andere gassen verstoord. De vraag is dan of er iets te zien is aan de community op die momenten wat kan verklaren waarom de abiotische factoren veranderen.
+Bij dit proces wordt vloeistof uit het rumen geëxtraheerd en samen met gras in een artificiële rumen reactor (ARR) gebracht. De microben die in de vloeistof afkomstig uit het rumen aanwezig zijn, produceren vervolgens vluchtige vetzuren (VFA's) middels fermentatie, een vorm van anaerobe respiratie. Anaerobe respiratie is een proces waarbij energie wordt geproduceerd in afwezigheid van zuurstof. Bij de fermentatie worden koolhydraten gedegradeerd tot VFA's;
+
+Deze VFA's worden geëxtraheerd uit de ARR en in een biogasreactor geplaatst waar de methaan productie door de aanwezige microben plaatsvindt.
+
+De productie van methaan wordt ook wel methanogenese genoemd. Deze microben gebruiken hiervoor waterstof en koolstofdioxide als substraten. De methanogenese reactie is een redoxreactie. Hierbij fungeert waterstof als de elektron donor en wordt deze geoxideerd. Koolstofdioxide wordt tijdens de reactie gereduceerd .
+
+Het geproduceerde methaan wordt vervolgens gezuiverd in een Tricklebed reactor (TBR). Naast de zuivering vindt er verdere methanogenese plaats. De methanogenese lijkt echter op sommige momenten te dalen​. Om de reden voor deze daling te achterhalen is er een metagenomics analyse uitgevoerd. Met metagenomics kan het genetisch materiaal van meerdere microben in een keer direct geanalyseerd worden. Hierdoor kan de focus gelegd worden op de functies, compositie en diversiteit van een gemeenschap aan microben, in plaats van het analyseren van individuele microben. Verder wordt metagenomics veel gebruikt omdat het de mogelijkheid biedt om microben die moeilijk of niet te kweken zijn toch te bestuderen​.
+
+Onderzoeksvragen:
+
+De bacterieele community in deze reactor veranderd ook door de tijd, en dit heeft functionele gevolgen: soms valt de methaanproductie uit, of wordt de mix van, methaan en andere gassen verstoord. De vraag is dan of er iets te zien is aan de community op die momenten wat kan verklaren waarom de abiotische factoren veranderen.
 
 Een bijpassende onderzoeksvraag zou als volgt kunnen zijn:
 
-- ﻿﻿Wat is de samenstelling van de inhoud van de biogasreactor op 4 verschillende locaties, boven, midden, onder en het plaques?
-- ﻿﻿Op welke manier kan deze samenstelling de methaanproductie beïnvloeden?
+﻿﻿Wat is de samenstelling van de inhoud van de biogasreactor op 4 verschillende locaties, boven, midden, onder en het paques?
 
-Om deze onderzoekensvragen te bereiken gaan we de volgende stappen uitvoeren.
+﻿Op welke manier kan deze samenstelling de methaanproductie beïnvloeden?
 
-__Stappen__:
+Om deze onderzoekensvragen te beantwoorden zijn de volgende stappen uitgevoerd:
+
+Stappen:
 
 Quality control
 
@@ -45,8 +56,7 @@ Basecalling
 
 Visualisation
 
-
-__Tools__:
+Tools:
 
 NanoQC v.0.9.4.
 
@@ -57,8 +67,6 @@ Kraken2 v.2.1.2.
 bioBakery: human3 v3.9
 
 Dorado
-
-
 
 Quality control & Trimming using Nanopack
 
@@ -75,94 +83,137 @@ Voor het identificeren van de micro-organismen is de Kraken2 pipeline gebruikt. 
 kraken2 --db /data/datasets/KRAKEN2_INDEX/k2_standard_20231009/ --report {log} --output {output} {input}
 
 Functional profiling
-Voor de functional profiling van de micro-organismen is gebruikt gemaakt van de HUMAnN pipeline van bioBakery. Deze pipeline is gekozen omdat ook hier al mapping plaats vind en omdat de
+
+Voor de functional profiling van de micro-organismen is gebruikt gemaakt van de HUMAnN3 pipeline van bioBakery. Deze pipeline is gekozen omdat ook hier al mapping plaatsvindt en omdat deze geschikt is voor het voorspellen van de functies van microben aan de hand van pathways.
+
+HUManN3 is met behulp van pip install geïnstalleerd omdat conda problemen gaf.
+
+HUManN3 maakt gebruik van de tool DIAMOND. Deze kon via deze link gedownload worden en moest vervolgens op dezelfde locatie als de snakefile gezet worden. Ook moest in .bashrc de path naar DIAMOND aangegeven worden.
+
+Voor de functional annotation maakt HUManN3 gebruik van databases. De tool gaf tijdens het runnen een error dat het de verkeerde databases had. Er is vervolgens gezocht naar de correcte databases. Een van de databases is met de volgende command geïnstalleerd:
+
+humann_databases --download chocophlan full {config["choco"]}
+
+De locatie van deze database werd meegegeven aan HUManN door --nucleotide-database <locatie database> te gebruiken.
+
+Er was ook nog een refseq database nodig voor de mapping stap in HUManN, maar omdat de database hierboven al 20 GB was, en HUManN met .sam en .bam files als input kan werken, werd ervoor gekozen om de mapping stap in HUManN zelf uit te voeren met behulp van Minimap2. Minimap2 was gekozen voor het mappen omdat het een geschikte tool is voor de langere reads afkomstig van de MinION.
+
+Minimap2 is met de volgende rule gerunned:
+
+rule minimap2_sam:
+
+    input:
+
+        target= config['minimap_index'],
+
+        query= OD + 'qc/nanofilt/{sample}.fastq'
+
+    output:
+
+        OD + "aligned/{sample}_aln.sam"
 
 
-Om de tool HUManN werkende te krijgen zijn er aantal stappen vooraf en tijdens gebeurt. Met de volgende instellingen heeft het er eindelijke voorgezorgd dat het werkte.
-De beide databases moesten aanwezig zijn in de zelfde map. Voordat dat ontdekt was waren de volgende dingen uitgebrobeert.
 
-Human3 moest geinstalleerd worden via pip install en werkte niet in een conda environment. Hiernaast had je nog excutable diamond nodig. Die gehaald kan worden van 
-https://github.com/bbuchfink/diamond/releases/tag/v2.0.15. Dit is gedownload en moest vervolgens op de zelfde locatie staan waar de snakefile was. Verder hebben we in de .Bashrc de PATH aangeven waar diamond stond.
-We kregen op dit moment een error in dat metaphlan dat het de verkeerde database downloadde en een andere versie nodig had. We hadden zelf een database gevonden en geinstalleerd door:
-> humann_databases --download chocophlan full {config["choco"]}
+    log:
 
-Deze gaven we mee doormiddel van de --nucleotide-database <locatie databas>.
-Alleen we moeten nog een refseq instaleren, alleen chocophlan was al 20 GB dus we waren over onze max heen en dachten dus we gaan de mapping stap overslaan in human3.
-En hem dus zelf uitvoeren met minimap2 omdat we lange reads hebben en de index al tot onze beschikking staat. Want human3 kan ook .sam bestanden verwerken.
+        OD + "log/minimap2/{sample}.log"
 
-Om dus de hele mapping stap over te slaan en gebruik te maken van Minimap2, hiervoor hadden we de volgende rule gemaakt:
+    shell:
 
-# rule minimap2_sam:
-#     input:
-#         target= config['minimap_index'],
-#         query= OD + 'qc/nanofilt/{sample}.fastq'
-#     output:
-#         OD + "aligned/{sample}_aln.sam"
-#     log:
-#         OD + "log/minimap2/{sample}.log"
-#     shell:
-#         'minimap2 -ax map-ont {input.target} {input.query} > {output}'
+        'minimap2 -ax map-ont {input.target} {input.query} > {output}'
 
-Alleen we merkten zodra we HUManN vervolgens op deze output wilden gebruiken, deze lege outputs gaf. Dit kon er aan liggen dat de index die voor minimap2 is gebruikt.
-Deze te veel verschillen had met de index die ze gebruikte in Bowtie in HUMAnN. 
+Alleen we merkten zodra we HUManN vervolgens op deze output wilden gebruiken, deze lege outputs gaf. Dit kon er aan liggen dat de index die voor Minimap2 is gebruikt.
 
-Daardoor waren we overgestapt naar een andere mogelijkheid. Dus wel de mapping in HUMAnN te gebruiken. Hiervoor kon je een database meegeven doormiddel van --protein-database. 
-We hadden een refseq versie gevonden die weinig geheugen nodig had, dus die hadden we gedownload.
-> humann_databases --download uniref uniref50_ec_filtered_diamond reduced {config["uniref"]}
+De lege outputs hadden te maken met de verschillen van de index in Bowtie van HUManN en de index in Minimap2.
+
+Daardoor waren we overgestapt naar een andere mogelijkheid. Dus wel de mapping in HUMAnN te gebruiken. Hiervoor kon je een database meegeven doormiddel van --protein-database.
+
+We hadden een refseq versie gevonden die weinig geheugen nodig had, dus die hadden we gedownload met de volgende command:
+
+humann_databases --download uniref uniref50_ec_filtered_diamond reduced {config["uniref"]}
+
 Alleen deze kon hij niet vinden zodra we de locatie meegaven.
 
 En voor MetaPhlAn, er ook een database meegegeven worden doormiddel van --nucleotide-database.
-Alleen zodra wij deze meegaven nam MetaPhlAn toch nog de keuze om zelf een database te downloaden, alleen hiervoor was geen ruimte waar MetaPhlAn was geinstalleerd. 
+
+Alleen zodra wij deze meegaven nam MetaPhlAn toch nog de keuze om zelf een database te downloaden, alleen hiervoor was geen ruimte waar MetaPhlAn was geinstalleerd.
+
 En zodra hij het had gedownload kregen we de error dat het de verkeerde versie was. Dit was beide magisch opgelost zodra we beide databases in de zelfde map hadden geplaatst.
 
 Na dit geprutst werkte de tool op een test file. Zie /students/2023-2024/Thema07/biogas/test/ met het test bestand wat we hebben gebruikt en de output. daarvoor hadden we de volgende rule gebruikt:
 
-#human3 is a package in biobakery
 rule human3:
-   input:
-       input_fasta = '/students/2023-2024/Thema07/biogas/test/demo.fastq.gz'
-   output:
-       "test/output10/"
-   shell:
-       """
-       # humann_databases --download uniref uniref50_ec_filtered_diamond ../databases 
-       humann --input '/students/2023-2024/Thema07/biogas/test/demo.fastq.gz' --output "test/output10/" --protein-database /students/2023-2024/Thema07/biogas/metaphlan/uniref --nucleotide-database /students/2023-2024/Thema07/biogas/metaphlan/chocophlan
-       """
+
+        input:
+
+            input_fasta = '/students/2023-2024/Thema07/biogas/test/demo.fastq.gz'
+
+        output:
+
+            "test/output10/"
+
+        shell:
+
+            """
+
+            humann_databases --download uniref uniref50_ec_filtered_diamond ../databases
+
+            humann --input '/students/2023-2024/Thema07/biogas/test/demo.fastq.gz' --output "test/output10/" --protein-database /students/2023-2024/Thema07/biogas/metaphlan/uniref --nucleotide-database /students/2023-2024/Thema07/biogas/metaphlan/chocophlan
+
+            """
 
 Alleen toen we het met onze eigen data deden kregen we een memory usage issue. Zie de volgende error die we kregen:
-
-
 
 Basecalling
 
 Visualisation
 
-Voor visualisatie was er het idee om bracken te gebruiken en daar vervolgens met gebruik van kraken-bracken, https://github.com/rotheconrad/Kraken-Bracken-plot, een plot te maken.
-Hiervoor zijn de volgende regels opgesteld:
+Voor visualisatie was er het idee om bracken te gebruiken en daar vervolgens met gebruik van kraken-bracken een plot te maken.
 
-# rule bracken:
-#     input:
-#         kraken = OD + 'log/{sample}_report.log',
-#         KRAKEN_DB = '/data/datasets/KRAKEN2_INDEX/k2_standard_20231009/'
-#     output:
-#         OD + ' bracken/{sample}_bracken_out.tsv'
-#     shell:
-#         'bracken-build -d {input.KRAKEN_DB} -t 10 | '
-#         'bracken -d {input.KRAKEN_DB} -i {input.kraken} -o {output}'
+Hiervoor zijn de volgende rules opgesteld:
 
-# rule bracken_plot:
-#     input:
-#         expand(OD + ' bracken/{sample}_bracken_out.tsv', sample=list(d.keys()))
-#     output:
-#         OD + 'visualisation/bracken.pdf'
-#     shell:
-#         'python ../Kraken-Bracken-plot-main/Kraken-Bracken-plot.py -o ../output.txt -i config/temp_input.txt'
+rule bracken:
 
-Bracken kon je instaleren via conda, maar dan kon je vervolgens bracken niet vinden in je geinstalleerde tools. 
-Je kon bracken ook instaleren via de git repo. Alleen herkende die bracken-build toen niet.
+        input:
+
+            kraken = OD + 'log/{sample}_report.log',
+
+            KRAKEN_DB = '/data/datasets/KRAKEN2_INDEX/k2_standard_20231009/'
+
+        output:
+
+            OD + ' bracken/{sample}_bracken_out.tsv'
+
+        shell:
+
+            'bracken-build -d {input.KRAKEN_DB} -t 10 |'
+
+            'bracken -d {input.KRAKEN_DB} -i {input.kraken} -o {output}'
+
+
+
+rule bracken_plot:
+
+        input:  
+
+            expand(OD + ' bracken/{sample}_bracken_out.tsv', sample=list(d.keys()))
+
+        output:
+
+            OD + 'visualisation/bracken.pdf'
+
+        shell:
+
+            'python ../Kraken-Bracken-plot-main/Kraken-Bracken-plot.py -o ../output.txt -i config/temp_input.txt'
+
+Bracken kon geïnstalleerd worden via conda, maar dan kon je vervolgens bracken niet vinden in je geinstalleerde tools.
+
+Je kon bracken ook installeren via de git repo. Alleen herkende die bracken-build toen niet.
+
 Overigens werd er gerealiseert dat er bij kraken-bracken_plot een stacked bar plot uit kwam en we dit liever niet hadden.
-Toen is er overgegaan naar het schrijven van een eigen schript voor processen van de kraken_report.log output bij kraken2.
+
+Toen is er overgegaan naar het schrijven van een eigen script voor processen van de kraken_report.log output bij kraken2.
+
 Hierin hebben we verschillende plotjes gemaakt. Waarin alles gekeken wordt naar de top 10 organismen aanwezig in de samples.
+
 Zo worden verschillende samples met elkaar vergeleken met hun eigen top 10 en de top 10 met de overeenkomsten.
-
-
