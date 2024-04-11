@@ -14,7 +14,10 @@ __Clone repo__
 `
 git clone https://github.com/Larissavf/metagenomics_biogas
 `  
-__Start env__  
+__Start env__   
+
+environment.yml, kan je vinden in de /workflow/env/.  
+
 `
 conda env create --file environment.yml
 `  

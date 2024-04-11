@@ -4,7 +4,7 @@ configfile: 'config/config.yaml'
 #verzamelen van sample namen
 d = {}
 with open('config/temp_input.txt','w') as file:
-   for sample_name in config['fastq_all']:
+   for sample_name in config['test']:
        basename = os.path.splitext(sample_name)
        basename = os.path.basename(basename[0])
        d[basename] = sample_name
@@ -36,7 +36,7 @@ rule nanofilt:
    output:
        OD + 'qc/nanofilt/{sample}.fastq'
    shell:
-       "NanoFilt --headcrop 40 --tailcrop 20 --quality 11 {input} > {output}"
+        "NanoFilt --headcrop 40 --tailcrop 20 --quality 11 {input} > {output} "
 
 rule kraken2:
    input:
