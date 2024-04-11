@@ -18,12 +18,17 @@ __Start env__
 `
 conda env create --file environment.yml
 `  
+
+Voor de tool human3. Heb je de executable van diamond nodig. 
+Deze moet je handmatig instaleren vanaf https://github.com/bbuchfink/diamond/releases/tag/v2.0.15. En dan moet diamond op de zelfde locatie zetten als je Snakefile.
+
 ### Usage   
 De pipeline is samengesteld in snakemake, je moet het dus via snakemake runnen.  
 __Run Snakemake__  
 `
 snakemake --snakefile Snakemake -c 2
 `  
+
 
 ## Introduction  
 Deze repo is gemaakt voor een metagenomics onderzoek van de inhoud van een Tricklebed reactor (TBR), die op het lab staat in de hanze. Dit is dan ook in uitvoering gedaan van de groep onderzoekers van dit project. Bij dit project:  
@@ -72,7 +77,7 @@ In deze workflow hebben we gebruik gemaakt van de volgende tools:
 - humann3?  
 - dorado*  
 
-* Dorado heeft zijn eigen snakmake bestand. Want deze is gebruikt voor het rebasecallen van de data. De input hiervan is fast5. 
+*Dorado heeft zijn eigen snakmake bestand. Want deze is gebruikt voor het rebasecallen van de data. De input hiervan is fast5. 
 
 ## Project structuur
 __Logboek__:  
