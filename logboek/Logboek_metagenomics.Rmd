@@ -54,7 +54,10 @@ NanoFilt v.2.8.0.
 
 Kraken2 v.2.1.2.
 
-bioBakery: HUManN3
+bioBakery: human3 v3.9
+
+Dorado
+
 
 
 Quality control & Trimming using Nanopack
@@ -72,7 +75,6 @@ Voor het identificeren van de micro-organismen is de Kraken2 pipeline gebruikt. 
 kraken2 --db /data/datasets/KRAKEN2_INDEX/k2_standard_20231009/ --report {log} --output {output} {input}
 
 Functional profiling
-
 Voor de functional profiling van de micro-organismen is gebruikt gemaakt van de HUMAnN pipeline van bioBakery. Deze pipeline is gekozen omdat ook hier al mapping plaats vind en omdat de
 
 
@@ -114,7 +116,6 @@ Alleen zodra wij deze meegaven nam MetaPhlAn toch nog de keuze om zelf een datab
 En zodra hij het had gedownload kregen we de error dat het de verkeerde versie was. Dit was beide magisch opgelost zodra we beide databases in de zelfde map hadden geplaatst.
 
 Na dit geprutst werkte de tool op een test file. Zie /students/2023-2024/Thema07/biogas/test/ met het test bestand wat we hebben gebruikt en de output. daarvoor hadden we de volgende rule gebruikt:
-
 
 #human3 is a package in biobakery
 rule human3:
