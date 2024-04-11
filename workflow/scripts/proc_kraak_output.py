@@ -10,7 +10,7 @@ author: Larissa
 date: 10-04-2024
 """
 import pandas as pd
-import matplotlib as plt
+import matplotlib.pyplot as plt
 import numpy as np
 import venn
 import os
@@ -177,13 +177,13 @@ def make_intersect_bar_plot(intersect, df_boven, df_onder, df_midden, changes):
     ax.legend(loc='upper right', ncols=3)
     plt.xticks(rotation=90)
     plt.yticks(range(1, 40))
-    plt.rcParams["figure.figsize"] = (10,9)
+    plt.rcParams["figure.figsize"] = (17,10)
     plt.savefig("../pic/intersect_of_3lvl.png")
 
 
     #thanks to matplotlib voorbeeld<3
 
-def prep_data_TBR_plot(df_boven_f, df_boven):
+def prep_data_TBR_plot(df_boven_f, df_boven, changes_o):
     """
     maak lijstjes van de top 10 organismen elk niveau
     en de bijbehorende percentages
@@ -191,22 +191,22 @@ def prep_data_TBR_plot(df_boven_f, df_boven):
     """
     #prep data
     nums_b = list(df_boven_f["taxonomic_name"][:10])
-    df_boven_10 = intersect_org(nums_b, df_boven)
+    df_boven_10 = intersect_org(nums_b, df_boven, changes_o)
     l_boven_10 = list(df_boven_10["taxonomic_name"])
     perc_boven = list(df_boven_10["perc_frag"])
     return l_boven_10, perc_boven
 
 
 
-def make_TBR_bar_plot(df_boven_f, df_boven, df_midden_f, df_midden, df_onder_f, df_onder):
+def make_TBR_bar_plot(df_boven_f, df_boven, df_midden_f, df_midden, df_onder_f, df_onder, changes):
     """
     maak een bar plot in de volgorde van de TBR, dus van elk niveau de top 10
     input: van elk niveau de filterd en non filter versie
     """
     #prep data
-    l_boven_10, perc_boven = prep_data_TBR_plot(df_boven_f, df_boven)
-    l_midden_10, perc_midden = prep_data_TBR_plot(df_midden_f, df_midden)
-    l_onder_10, perc_onder = prep_data_TBR_plot(df_onder_f, df_onder)
+    l_boven_10, perc_boven = prep_data_TBR_plot(df_boven_f, df_boven, changes)
+    l_midden_10, perc_midden = prep_data_TBR_plot(df_midden_f, df_midden, changes)
+    l_onder_10, perc_onder = prep_data_TBR_plot(df_onder_f, df_onder, changes)
 
     fig, ax = plt.subplots()
 
@@ -234,14 +234,12 @@ def make_TBR_bar_plot(df_boven_f, df_boven, df_midden_f, df_midden, df_onder_f, 
         ax.text(-12.6, loc,name, fontsize=12)
         loc -= 11
     plt.xticks(range(1, 40))
+    plt.rcParams["figure.figsize"] = (15,13)
     plt.savefig("../pic/TBR_top10.png")
 
 
 
-    # Show the plot
-    plt.rcParams["figure.figsize"] = (10,8)
-
-def make_intersec_df(set1, set2, df1, df2):
+def make_intersec_df(set1, set2, df1, df2, changes_o):
     """
     intersect tussen 2 data
     set 1
@@ -250,8 +248,8 @@ def make_intersec_df(set1, set2, df1, df2):
     df 2
     """
     set1xset2 = set1.intersection(set2)
-    df_set1 = intersect_org(set1xset2, df1).sort_values(by='perc_frag',  ascending=False)[:10]
-    df_set2 = intersect_org(set1xset2, df2).sort_values(by='perc_frag',  ascending=False)[:10]
+    df_set1 = intersect_org(set1xset2, df1, changes_o).sort_values(by='perc_frag',  ascending=False)[:10]
+    df_set2 = intersect_org(set1xset2, df2, changes_o).sort_values(by='perc_frag',  ascending=False)[:10]
     return df_set1, df_set2
 
 def make_pac_vs(df_bovxpac, df_pacxbov, name1, name2):
@@ -279,7 +277,7 @@ def make_pac_vs(df_bovxpac, df_pacxbov, name1, name2):
     #show plot
     ax.legend()
     plt.xticks(rotation=90)
-    plt.rcParams["figure.figsize"] = (10,8)
+    plt.rcParams["figure.figsize"] = (9,11)
     plt.savefig("../pic/" + name1 + "_vs_" + name2 + ".png")
 
 def main():
@@ -288,7 +286,7 @@ def main():
     """
     #get dfs
     df_all_boven = read_input(sys.argv[1])
-    df_all_midden = read_input(sys.arv[2])
+    df_all_midden = read_input(sys.argv[2])
     df_all_onder = read_input(sys.argv[3])
     df_all_pacques = read_input(sys.argv[4])
     
@@ -320,13 +318,13 @@ def main():
     make_intersect_bar_plot(intersect, df_boven, df_midden, df_onder, changes)
 
     #prachtigere bar plot
-    make_TBR_bar_plot(df_boven, df_boven_f, df_midden, df_midden_f, df_onder, df_onder_f)
+    make_TBR_bar_plot(df_boven_f, df_boven, df_midden_f, df_midden, df_onder_f, df_onder, changes)
 
     #prachtige intersect tussen begin en eind
     # data prep
-    df_bovxpac, df_pacxbov = make_intersec_df(s_bov, s_pac, df_boven, df_pacques)
-    df_midxpac, df_pacxmid = make_intersec_df(s_mid, s_pac, df_midden, df_pacques)
-    df_ondxpac, df_pacxond = make_intersec_df(s_ond, s_pac, df_onder, df_pacques)
+    df_bovxpac, df_pacxbov = make_intersec_df(s_bov, s_pac, df_boven, df_pacques, changes)
+    df_midxpac, df_pacxmid = make_intersec_df(s_mid, s_pac, df_midden, df_pacques, changes)
+    df_ondxpac, df_pacxond = make_intersec_df(s_ond, s_pac, df_onder, df_pacques, changes)
     make_pac_vs(df_bovxpac, df_pacxbov, "Boven", " Pacques")
     make_pac_vs(df_midxpac, df_pacxmid, "Midden", "Pacques")
     make_pac_vs(df_ondxpac, df_pacxond, "Onder", "Pacques")

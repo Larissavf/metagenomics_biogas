@@ -1,6 +1,7 @@
 import os
 configfile: 'config/config.yaml'
 
+#verzamelen van sample namen
 d = {}
 with open('config/temp_input.txt','w') as file:
    for sample_name in config['fastq_all']:
@@ -11,15 +12,13 @@ with open('config/temp_input.txt','w') as file:
 
 OD = config['output_dir']
 samples = list((d.keys()))
-kraken_db = config['kraken_db']
 
 
 
 rule all:
    input:
-        # expand(OD + 'taxonomy/{sample}_output.txt', sample=samples),
-    #    OD +'visualisation/bracken.pdf',
-        #  expand(OD +'qc/nanoqc/{sample}', sample=samples),
+         expand(OD + 'taxonomy/{sample}_output.txt', sample=samples),
+         expand(OD +'qc/nanoqc/{sample}', sample=samples),
          expand(OD + 'human3_2/{sample}', sample=samples)
 
 
@@ -29,7 +28,7 @@ rule nanoqc:
    output:
        directory(OD+'qc/nanoqc/{sample}')
    shell:
-       'nanoQC -o {output} {input}'
+       "nanoQC -o {output} {input}"
 
 rule nanofilt:
    input:
@@ -37,7 +36,7 @@ rule nanofilt:
    output:
        OD + 'qc/nanofilt/{sample}.fastq'
    shell:
-       'NanoFilt --headcrop 40 --tailcrop 20 --quality 11 {input} > {output} ' 
+       "NanoFilt --headcrop 40 --tailcrop 20 --quality 11 {input} > {output}"
 
 rule kraken2:
    input:
@@ -47,7 +46,7 @@ rule kraken2:
    log:
        OD + 'log/{sample}_report.log'
    shell:
-       'kraken2 --db /data/datasets/KRAKEN2_INDEX/k2_standard_20231009/ --report {log} --output {output} {input}'
+       "kraken2 --db {config['kraken_db']} --report {log} --output {output} {input}"
 
 
 # human3 is a package in biobakery
@@ -61,16 +60,16 @@ rule human3:
     shell:
     #    "humann_databases --download chocophlan full {config["choco"]} && "
     #    "humann_databases --download uniref uniref50_ec_filtered_diamond reduced {config["uniref"]} && "
-         """ humann --input {input} --output {output} --nucleotide-database {config[choco]} --protein-database {config[uniref]} --bowtie-options "{params.bowtie_options}" 2>human.txt"""
+         """ humann --input {input} --output {output} --nucleotide-database {config[choco]} --protein-database 
+         {config[uniref]} --bowtie-options "{params.bowtie_options}" 2>human.txt"""
 
-
-rule kraken_proces:
+rule kraken_processing:
     input:
-        boven: config["kraken_bov_out"]
-        midden: config["kraken_mid_out"]
-        onder: config["kraken_ond_out"]
-        pacques: config["kraken_pac_out"]
-    log:
-        OD + "log/kraken_plot/output.txt" 
+        boven: config['kraken_bov_out']
+        midden: config['kraken_mid_out']
+        onder: config['kraken_ond_out']
+        pacques: config['kraken_pac_out']
+    output:
+        '../pic/venn.png'
     shell:
     "python scripts/proc_kraak_output.py {input.boven} {input.midden} {input.onder} {input.pacques}"
