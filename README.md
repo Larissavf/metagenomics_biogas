@@ -11,28 +11,64 @@ Je moet anaconda or miniconda version 24.1.2 geinstalleerd hebben.
 
 ### Installing  
 __Clone repo__  
-`
-git clone https://github.com/Larissavf/metagenomics_biogas
-`  
+
+    git clone https://github.com/Larissavf/metagenomics_biogas
+
+  
 __Start env__   
 
-environment.yml, kan je vinden in de /workflow/env/.  
+    conda env create --file environment.yml
+   
+[environment.yml](workflow/env/environment.yml), kan je vinden in de /workflow/env/.    
 
-`
-conda env create --file environment.yml
-`  
-
+__install more__  
 Voor de tool human3. Heb je de executable van diamond nodig. 
-Deze moet je handmatig instaleren vanaf https://github.com/bbuchfink/diamond/releases/tag/v2.0.15. En dan moet diamond op de zelfde locatie zetten als je Snakefile.
+Deze moet je handmatig instaleren [vanaf](https://github.com/bbuchfink/diamond/releases/tag/v2.0.15). En dan moet diamond op de zelfde locatie zetten als je Snakefile.
+Hiernaast heb je ook nog 2 databases nodig voor human3, deze nemen maximaal 22 GB in gebruik.   
+  
+En wees voorbereid voor hoge memory gebruik.  
 
-### Usage   
+__Recalebratie__
+  
+
+### Usage    
 De pipeline is samengesteld in snakemake, je moet het dus via snakemake runnen.  
+  
 __Run Snakemake__  
-`
-snakemake --snakefile Snakemake -c 2
-`  
 
+      snakemake --snakefile Snakemake -c 2  
+  
+__Run recalibratie__
+  
+## De pipeline 
+  
+__input:__ .fastq files  
+__output:__ kraken output files   
+  
+__kraken_report.log_:  
+5 kolommen:  
+1. Percentage van de reads in een clade/taxon.  
+2. Aantal reads in clade  
+3. Aantal reads in clade maar niet verder classified  
+4. Code dat rank aangeeft, (U)nclassified, (D)omain, (K)ingdom, (P)hylum, (C)lass, (O)rder, (F)amily, (G)enus, (S)pecies  
+5. NCBI taxonomi ID  
+6. Taxonomic name
+      
+__kraken_output.txt_:  
+3 kolemmen:  
+1. Sequence ID  
+2. NCBI taxon ID  
+3. Samenvatting van taxon Ids die zijn gematched aan elke k-mer.  
+  
+In deze workflow hebben we gebruik gemaakt van de volgende tools:  
+- [NanoQC](https://github.com/wdecoster/nanoQC)  
+- [NanoFilt](https://github.com/wdecoster/nanofilt)  
+- [kraken2](https://github.com/DerrickWood/kraken2)  
+- [humann3](https://github.com/biobakery/humann)  
+- [dorado*](https://github.com/nanoporetech/dorado)
 
+*Dorado heeft zijn eigen snakmake bestand. Want deze is gebruikt voor het rebasecallen van de data. De input hiervan is fast5.    
+  
 ## Introduction  
 Deze repo is gemaakt voor een metagenomics onderzoek van de inhoud van een Tricklebed reactor (TBR), die op het lab staat in de hanze. Dit is dan ook in uitvoering gedaan van de groep onderzoekers van dit project. Bij dit project:  
   
@@ -54,34 +90,7 @@ Een bijpassende onderzoeksvraag zou als volgt kunnen zijn:
 - ﻿﻿Op welke manier kan deze samenstelling de methaanproductie beïnvloeden?
 
 We kijken dus naar de bacterien die aan methagonese doen.
-
-__De pipeline__  
-
-__input:__ .fastq files.
-__output:__ kraken output files  
-    kraken_report.log:  
-        5 kolommen:  
-            1. Percentage van de reads in een clade/taxon.  
-            2. Aantal reads in clade  
-            3. Aantal reads in clade maar niet verder classified  
-            4. Code dat rank aangeeft, (U)nclassified, (D)omain, (K)ingdom, (P)hylum, (C)lass, (O)rder, (F)amily, (G)enus, (S)pecies  
-            5. NCBI taxonomi ID  
-            6. Taxonomic name  
-    kraken_output.txt:  
-        3 kolemmen:  
-            1. Sequence ID  
-            2. NCBI taxon ID  
-            3. Samenvatting van taxon Ids die zijn gematched aan elke k-mer.  
   
-In deze workflow hebben we gebruik gemaakt van de volgende tools:  
-- NanoQC  
-- NanoFilt  
-- kraken  
-- humann3?  
-- dorado*  
-
-*Dorado heeft zijn eigen snakmake bestand. Want deze is gebruikt voor het rebasecallen van de data. De input hiervan is fast5. 
-
 ## Project structuur
 __Logboek__:  
 Bevat het logboek, hierin kan je het proces zien van dit project.  
@@ -93,5 +102,5 @@ Bevat de Snakefile, rules, config file en andere scripts gebruik voor dit projec
 Voor verdere vragen kan je terecht bij de makers van deze repo.
 
 Larissa Voshol: l.voshol@st.hanze.nl  
-Marian Hasan: m.hasan@st.hanze.nl
+Marian Hasan: m.hasan@st.hanze.nl  
 Sven Schoonen: s.schoonen@st.hanze.nl
