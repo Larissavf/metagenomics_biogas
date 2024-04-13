@@ -2,7 +2,7 @@
 ##### Larissa Voshol, Marian Hassan & Sven Schoonen | 31-03-2024 | Bio informatica 2 | versie 1
 
 ## Purpose  
-Dit is een pipeline voor een Metagenomics onderzoek. Er wordt hier gekeken naar minION reads, deze worden gerecalibreert vervolgens wordt er met kraken2 en biobakery gekeken naar de inhoud van de samples.
+Dit is een pipeline voor een Metagenomics onderzoek. Er wordt hier gekeken naar minION reads, deze worden gerecalibreert vervolgens wordt er met kraken2 en biobakery: HUMAnN 3.0 gekeken naar de inhoud van de samples.
 
 ## Getting started
 
@@ -24,11 +24,10 @@ __Start env__
 __install more__  
 Voor de tool human3. Heb je de executable van diamond nodig. 
 Deze moet je handmatig instaleren [vanaf](https://github.com/bbuchfink/diamond/releases/tag/v2.0.15). En dan moet diamond op de zelfde locatie zetten als je Snakefile.
-Hiernaast heb je ook nog 2 databases nodig voor human3, deze nemen maximaal 22 GB in gebruik.   
-  
+Hiernaast heb je ook nog 2 databases nodig voor human3, deze nemen maximaal 22 GB in gebruik. Wordt gedownload in de rule.       
 En wees voorbereid voor hoge memory gebruik.  
 
-__Recalebratie__
+__Recallibratie__
   
 
 ### Usage    
@@ -36,14 +35,25 @@ De pipeline is samengesteld in snakemake, je moet het dus via snakemake runnen.
   
 __Run Snakemake__  
 
-      snakemake --snakefile Snakemake -c 2  
-  
-__Run recalibratie__
+    snakemake --snakefile Snakemake -c 4  
+
+__Run recallibratie__
   
 ## De pipeline 
   
-__input:__ .fastq files  
-__output:__ kraken output files   
+In deze workflow hebben we gebruik gemaakt van de volgende tools:  
+- [NanoQC](https://github.com/wdecoster/nanoQC)  
+- [NanoFilt](https://github.com/wdecoster/nanofilt)  
+- [kraken2](https://github.com/DerrickWood/kraken2)  
+- [humann3*](https://github.com/biobakery/humann)  
+- [dorado**](https://github.com/nanoporetech/dorado)
+Voor uitleg over de tool neem een kijkje op de github pagina.  
+  
+*humann3 hebben we werkende gekregen op een testfile, helaas op onze eigen data kregen wij last van een memory issue. Deze hebben we geprobeert op te lossen, deze versie heeft ook een [eigen snakemake bestand](workflow/rules).
+**Dorado heeft zijn [eigen snakmake bestand](workflow/rules). Want deze is gebruikt voor het rebasecallen van de data. De input hiervan is fast5.    
+  
+__Input:__ .fastq files  
+__Output:__ kraken output files   
   
 __kraken_report.log_:  
 5 kolommen:  
@@ -60,14 +70,21 @@ __kraken_output.txt_:
 2. NCBI taxon ID  
 3. Samenvatting van taxon Ids die zijn gematched aan elke k-mer.  
   
-In deze workflow hebben we gebruik gemaakt van de volgende tools:  
-- [NanoQC](https://github.com/wdecoster/nanoQC)  
-- [NanoFilt](https://github.com/wdecoster/nanofilt)  
-- [kraken2](https://github.com/DerrickWood/kraken2)  
-- [humann3](https://github.com/biobakery/humann)  
-- [dorado*](https://github.com/nanoporetech/dorado)
-
-*Dorado heeft zijn eigen snakmake bestand. Want deze is gebruikt voor het rebasecallen van de data. De input hiervan is fast5.    
+__Output:__ kraken.log processing  
+Diverse plots van de kraken output voor 4 samples [zie de afbeeldingen](pic).  
+1.  venn diagram met alle overeenkomende organismen.  
+2. een barplot met de top 10 van 3 samples: boven, onder en midden.    
+3. een barplot met de overeenkomende top 10 van die 3 samples: boven, onder en midden.  
+4. barplots met de overneekomende top 10 tussen 2 samples: van tijdstip 0 en tijdstip eind.  
+  
+__Output:__ humann3 output  
+__genefamilies.tsv_  
+__pathabundance.tsv_  
+__pathcoverage.tsv_  
+  
+Hiernaast worden ook nog overige output bestanden in een map geplaats van de bestanden die in de humann3 pipeline gemaakt worden.  
+  
+Zie [HUMAnN 3.0](https://github.com/biobakery/humann?tab=readme-ov-file#output-files) voor meer uitleg over de output bestanden.  
   
 ## Introduction  
 Deze repo is gemaakt voor een metagenomics onderzoek van de inhoud van een Tricklebed reactor (TBR), die op het lab staat in de hanze. Dit is dan ook in uitvoering gedaan van de groep onderzoekers van dit project. Bij dit project:  
@@ -96,7 +113,7 @@ __Logboek__:
 Bevat het logboek, hierin kan je het proces zien van dit project.  
 
 __Workflow__:  
-Bevat de Snakefile, rules, config file en andere scripts gebruik voor dit project.  
+Bevat de Snakefile, env, rules, config file en andere scripts gebruik voor dit project.  
 
 ## Help  
 Voor verdere vragen kan je terecht bij de makers van deze repo.
