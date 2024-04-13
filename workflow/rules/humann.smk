@@ -15,13 +15,16 @@ rule all:
         expand(OD + 'human3_2/{sample}', sample=list((d.keys())))
 
 # human3 is a package in biobakery
+# bowtie options die het helaas nog niet doen
 rule human3:
-   input:
+    input:
         lambda wildcards: d[wildcards.sample]
-   output:
+    output:
        directory(OD + 'human3_2/{sample}')
-   shell:
-        "humann_databases --download chocophlan full {config["choco"]} && "
-        "humann_databases --download uniref uniref50_ec_filtered_diamond reduced {config["uniref"]} && "
-        "humann --input {input} --output {output} --nucleotide-database {config[choco]} --protein-database {config[uniref]} 2>human.txt"
-    
+    params:
+        bowtie_options="--very-fast"
+    shell:
+    #    "humann_databases --download chocophlan full {config["choco"]} && "
+    #    "humann_databases --download uniref uniref50_ec_filtered_diamond reduced {config["uniref"]} && "
+         """ humann --input {input} --output {output} --nucleotide-database {config[choco]} --protein-database 
+         {config[uniref]} --bowtie-options "{params.bowtie_options}" 2>human.txt"""
