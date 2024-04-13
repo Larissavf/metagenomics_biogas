@@ -21,7 +21,7 @@ rule human3:
    output:
        directory(OD + 'human3_2/{sample}')
    shell:
-    #    "humann_databases --download chocophlan full {config["choco"]} && "
-    #    "humann_databases --download uniref uniref50_ec_filtered_diamond reduced {config["uniref"]} && "
-        "humann --input {input} --output {output} --nucleotide-database {config[choco]} --protein-database {config[uniref]} --bowtie-options very-fast 2>human.txt"
+        "humann_databases --download chocophlan full {config["choco"]} && "
+        "humann_databases --download uniref uniref50_ec_filtered_diamond reduced {config["uniref"]} && "
+        "humann --input {input} --output {output} --nucleotide-database {config[choco]} --protein-database {config[uniref]} 2>human.txt"
     
