@@ -19,7 +19,7 @@ rule all:
    input:
          expand(OD + 'taxonomy/{sample}_output.txt', sample=samples),
          expand(OD +'qc/nanoqc/{sample}', sample=samples),
-         expand(OD + 'human3_2/{sample}', sample=samples)
+         expand(OD + 'taxonomy/{sample}_output.txt', sample=SAMPLES)
 
 
 rule nanoqc:
@@ -47,21 +47,6 @@ rule kraken2:
        OD + 'log/{sample}_report.log'
    shell:
        "kraken2 --db {config['kraken_db']} --report {log} --output {output} {input}"
-
-
-# human3 is a package in biobakery
-rule human3:
-    input:
-        OD + 'qc/nanofilt/{sample}.fastq'
-    output:
-       directory(OD + 'human3_2/{sample}')
-    params:
-        bowtie_options="--very-fast"
-    shell:
-    #    "humann_databases --download chocophlan full {config["choco"]} && "
-    #    "humann_databases --download uniref uniref50_ec_filtered_diamond reduced {config["uniref"]} && "
-         """ humann --input {input} --output {output} --nucleotide-database {config[choco]} --protein-database 
-         {config[uniref]} --bowtie-options "{params.bowtie_options}" 2>human.txt"""
 
 rule kraken_processing:
     input:
