@@ -6,12 +6,12 @@ torch.cuda.empty_cache()
 pod5_out_bov = "/students/2023-2024/Thema07/biogas/output/new_fast5/Boven2/"
 pod5_out_mid = "/students/2023-2024/Thema07/biogas/output/new_fast5/Midden3/"
 pod5_out_onder = "/students/2023-2024/Thema07/biogas/output/new_fast5/Onder1/"
-pod5_out_pac = "/students/2023-2024/Thema07/biogas/output/new_fast5/Pacques2/"
+pod5_out_pac = "/students/2023-2024/Thema07/biogas/output/new_fast5/"
 
 fastq_out_bov = "/students/2023-2024/Thema07/biogas/output/boven"
 fastq_out_mid = "/students/2023-2024/Thema07/biogas/output/midden"
 fastq_out_onder = "/students/2023-2024/Thema07/biogas/output/onder"
-# fastq_out_pac = "/students/2023-2024/Thema07/biogas/output/new_fast5/Pacques2/"
+fastq_out_pac = "/students/2023-2024/Thema07/biogas/output/new_fast5/basecalled/"
 
 samples_bov = [f.replace(".pod5", "") for f in os.listdir(pod5_out_bov)]
 samples_mid = [f.replace(".pod5", "") for f in os.listdir(pod5_out_mid)]
@@ -36,5 +36,5 @@ for sample in samples_mid:
 for sample in samples_onder:
     run_dorado(sample, pod5_out_onder, fastq_out_onder)
 
-#for sample in samples_pac:
-#    run_dorado(sample, pod5_out_pac, fastq_out_pac
+for sample in samples_pac:
+    run_dorado(sample, pod5_out_pac, fastq_out_pac
