@@ -92,7 +92,21 @@ __Output:__ humann3 output
 __genefamilies.tsv_  
 __pathabundance.tsv_  
 __pathcoverage.tsv_  
-  
+
+Dorado.py
+
+Voor gebruik:
+Moet dorado-0.5.3-linux-x64 
+Op graphice kaart geinstalleerd zijn
+pip install tourch
+export CUDA_LAUNCH_BLOCKING=1
+PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:32
+
+convert_to_pod5
+
+Voor gebruik:
+pip install pod5
+
 Hiernaast worden ook nog overige output bestanden in een map geplaats van de bestanden die in de humann3 pipeline gemaakt worden.  
   
 Zie [HUMAnN 3.0](https://github.com/biobakery/humann?tab=readme-ov-file#output-files) voor meer uitleg over de output bestanden.  
