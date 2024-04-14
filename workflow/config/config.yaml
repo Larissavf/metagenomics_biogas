@@ -10,16 +10,6 @@ fast5:
   - '/commons/docent/Thema07/metagenomics/biogas/TBR_P2_O1/Onder1/20220727_1357_MN36331_FAT64465_a35d4b1f/fast5'
   - '/commons/docent/Thema07/metagenomics/biogas/TBR_P2_O1/Pacques2/20220727_1357_MN28083_FAT74352_1c4d8c39/fast5'
 
-fastq_all:
-  - "/commons/docent/Thema07/metagenomics/biogas/TBR_M3_B2/Boven2/20220728_1612_MN36331_FAT64465_c641c8e0/fastq/pass/boven2_all.fastq"
-  - "/commons/docent/Thema07/metagenomics/biogas/TBR_M3_B2/Midden3/20220728_1612_MN28083_FAT74352_83059c82/fastq/pass/midden3_all.fastq"
-  - "/commons/docent/Thema07/metagenomics/biogas/TBR_P2_O1/Onder1/20220727_1357_MN36331_FAT64465_a35d4b1f/fastq/pass/onder1_all.fastq"
-  - "/commons/docent/Thema07/metagenomics/biogas/TBR_P2_O1/Pacques2/20220727_1357_MN28083_FAT74352_1c4d8c39/fastq/pass/pacques2_all.fastq"
-
-test:
-  - '/commons/docent/Thema07/metagenomics/biogas/TBR_P2_O1/Pacques2/20220727_1357_MN28083_FAT74352_1c4d8c39/fastq/pass/fastq_runid_b58cd7ca3fd1b2ef201791d16538587fbf47de31_97_0.fastq'
-  - '/commons/Themas/Thema07/metagenomics/biogas/TBR_P2_O1/Onder1/20220727_1357_MN36331_FAT64465_a35d4b1f/fastq/pass/fastq_runid_a0142bb42bf9dc8cf341d8ed3f7dc0a6d4e19c0d_98_0.fastq'
-
 output_dir: /students/2023-2024/Thema07/biogas/
 
 kraken_db: 'data/datasets/KRAKEN2_INDEX/k2_standard_20231009/'
