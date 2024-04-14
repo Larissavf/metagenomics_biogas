@@ -36,4 +36,4 @@ kraken_pac_out: /students/2023-2024/Thema07/biogas/log/pacques2_all_report.log
 pod5_out_bov : /students/2023-2024/Thema07/biogas/output/new_fast5/Boven2/
 pod5_out_mid : /students/2023-2024/Thema07/biogas/output/new_fast5/Midden3/
 pod5_out_onder : /students/2023-2024/Thema07/biogas/output/new_fast5/Onder1/
-pod5_out_pac : /students/2023-2024/Thema07/biogas/output/new_fast5/Pacques2/
+pod5_out_pac : /students/2023-2024/Thema07/biogas/output/new_fast5/
