@@ -37,4 +37,4 @@ for sample in samples_onder:
     run_dorado(sample, pod5_out_onder, fastq_out_onder)
 
 for sample in samples_pac:
-    run_dorado(sample, pod5_out_pac, fastq_out_pac
+    run_dorado(sample, pod5_out_pac, fastq_out_pac)
