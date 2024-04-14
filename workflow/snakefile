@@ -1,7 +1,1 @@
 
-SAMPLES = ['A', 'B', 'C']
-rule NAME:
-    input: data = '/commons/Themas/Thema07/metagenomics/biogas/TBR_P2_O1/Pacques2/20220727_1357_MN28083_FAT74352_1c4d8c39/fastq/pass/pacques2_all.fastq'
-		fastq_runid_b58cd7ca3fd1b2ef201791d16538587fbf47de31_685_0
-    output: "/output"
-    
