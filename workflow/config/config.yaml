@@ -4,6 +4,12 @@ fastq:
   - '/commons/docent/Thema07/metagenomics/biogas/TBR_P2_O1/Onder1/20220727_1357_MN36331_FAT64465_a35d4b1f/fastq/pass'
   - '/commons/docent/Thema07/metagenomics/biogas/TBR_P2_O1/Pacques2/20220727_1357_MN28083_FAT74352_1c4d8c39/fastq/pass'
 
+fast5:
+  - '/commons/docent/Thema07/metagenomics/biogas/TBR_M3_B2/Boven2/20220728_1612_MN36331_FAT64465_c641c8e0/fast5'
+  - '/commons/docent/Thema07/metagenomics/biogas/TBR_M3_B2/Midden3/20220728_1612_MN28083_FAT74352_83059c82/fast5'
+  - '/commons/docent/Thema07/metagenomics/biogas/TBR_P2_O1/Onder1/20220727_1357_MN36331_FAT64465_a35d4b1f/fast5'
+  - '/commons/docent/Thema07/metagenomics/biogas/TBR_P2_O1/Pacques2/20220727_1357_MN28083_FAT74352_1c4d8c39/fast5'
+
 fastq_all:
   - "/commons/docent/Thema07/metagenomics/biogas/TBR_M3_B2/Boven2/20220728_1612_MN36331_FAT64465_c641c8e0/fastq/pass/boven2_all.fastq"
   - "/commons/docent/Thema07/metagenomics/biogas/TBR_M3_B2/Midden3/20220728_1612_MN28083_FAT74352_83059c82/fastq/pass/midden3_all.fastq"
@@ -26,3 +32,8 @@ kraken_bov_out: /students/2023-2024/Thema07/biogas/log/boven2_all_report.log
 kraken_mid_out: /students/2023-2024/Thema07/biogas/log/midden3_all_report.log
 kraken_ond_out: /students/2023-2024/Thema07/biogas/log/onder1_all_report.log
 kraken_pac_out: /students/2023-2024/Thema07/biogas/log/pacques2_all_report.log
+
+pod5_out_bov : /students/2023-2024/Thema07/biogas/output/new_fast5/Boven2/
+pod5_out_mid : /students/2023-2024/Thema07/biogas/output/new_fast5/Midden3/
+pod5_out_onder : /students/2023-2024/Thema07/biogas/output/new_fast5/Onder1/
+pod5_out_pac : /students/2023-2024/Thema07/biogas/output/new_fast5/Pacques2/
