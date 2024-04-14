@@ -28,7 +28,18 @@ Hiernaast heb je ook nog 2 databases nodig voor human3, deze nemen maximaal 22 G
 En wees voorbereid voor hoge memory gebruik.  
 
 __Recallibratie__
-  
+Voor gebruik:
+Moet dorado-0.5.3-linux-x64 
+Op graphice kaart geinstalleerd zijn
+pip install tourch
+export CUDA_LAUNCH_BLOCKING=1
+PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:32
+
+convert_to_pod5
+
+Voor gebruik:
+pip install pod5
+
 
 ### Usage 
 De pipeline is samengesteld in snakemake, je moet het dus via snakemake runnen. 
@@ -38,9 +49,9 @@ Maar voordat je hem wilt runnen moet je de volgende stappen hebben uitgevoerd.
 __Opstarten conda env__  
 `
 Conda activate env.yaml 
-`
-__Install diamond__
-Github repo:
+`  
+__Install diamond__  
+Github repo:  
 Plaats het op de locatie waar ook de snakemake file staat.
 
   
@@ -49,6 +60,8 @@ __Run Snakemake__
     snakemake --snakefile Snakemake -c 4  
 
 __Run recallibratie__
+
+Dorado.py
   
 ## De pipeline 
   
@@ -93,20 +106,6 @@ __genefamilies.tsv_
 __pathabundance.tsv_  
 __pathcoverage.tsv_  
 
-Dorado.py
-
-Voor gebruik:
-Moet dorado-0.5.3-linux-x64 
-Op graphice kaart geinstalleerd zijn
-pip install tourch
-export CUDA_LAUNCH_BLOCKING=1
-PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:32
-
-convert_to_pod5
-
-Voor gebruik:
-pip install pod5
-
 Hiernaast worden ook nog overige output bestanden in een map geplaats van de bestanden die in de humann3 pipeline gemaakt worden.  
   
 Zie [HUMAnN 3.0](https://github.com/biobakery/humann?tab=readme-ov-file#output-files) voor meer uitleg over de output bestanden.  
@@ -134,8 +133,7 @@ Een bijpassende onderzoeksvraag zou als volgt kunnen zijn:
 We kijken dus naar de bacterien die aan methagonese doen.
   
 ## Project structuur
-__Logboek__:  
-Bevat het logboek, hierin kan je het proces zien van dit project.  
+__pic__: afbeeldingen geproduceerd door pipeline
 
 __Workflow__:  
 Bevat de Snakefile, env, rules, config file en andere scripts gebruik voor dit project.  
