@@ -1,4 +1,5 @@
 import os
+
 configfile: 'config/config.yaml'
 
 #verzamelen van sample namen
@@ -13,41 +14,54 @@ with open('config/temp_input.txt','w') as file:
 OD = config['output_dir']
 samples = list((d.keys()))
 
+FAST5_DIRS = config["directories"]["fast5"]
+OUTPUT_DIRS = [
+    config["directories"]["pod5_out_bov"],
+    config["directories"]["pod5_out_mid"],
+    config["directories"]["pod5_out_onder"],
+    config["directories"]["pod5_out_pac"]
+]
 
+# Collecting samples and corresponding output directories
+OUTPUT_POD5_DIRS = []
+for i, fast5_dir in enumerate(FAST5_DIRS):
+    samples = [os.path.basename(f) for f in os.listdir(fast5_dir) if os.path.isfile(os.path.join(fast5_dir, f))]
+    samples = [sample.replace('.fast5', '') for sample in samples]
+    OUTPUT_POD5_DIRS.extend([os.path.join(OUTPUT_DIRS[i], sample) for sample in samples])
 
 rule all:
-   input:
-         expand(OD + 'taxonomy/{sample}_output.txt', sample=samples),
-         expand(OD +'qc/nanoqc/{sample}', sample=samples),
-         expand(OD + 'taxonomy/{sample}_output.txt', sample=SAMPLES),
-         expand(OD + 'human3_2/{sample}', sample=SAMPLES)
-
+    input:
+        expand(OD + 'taxonomy/{sample}_output.txt', sample=samples),
+        expand(OD + 'qc/nanoqc/{sample}', sample=samples),
+        expand(OD + 'taxonomy/{sample}_output.txt', sample=SAMPLES),
+        expand(OD + 'human3_2/{sample}', sample=SAMPLES),
+        expand(OUTPUT_POD5_DIRS[i] + "/{sample}.pod5", i=range(len(OUTPUT_POD5_DIRS)))
 
 rule nanoqc:
-   input:
-       lambda wildcards: d[wildcards.sample]
-   output:
-       directory(OD+'qc/nanoqc/{sample}')
-   shell:
-       "nanoQC -o {output} {input}"
+    input:
+        lambda wildcards: d[wildcards.sample]
+    output:
+        directory(OD + 'qc/nanoqc/{sample}')
+    shell:
+        "nanoQC -o {output} {input}"
 
 rule nanofilt:
-   input:
-       lambda wildcards: d[wildcards.sample]
-   output:
-       OD + 'qc/nanofilt/{sample}.fastq'
-   shell:
+    input:
+        lambda wildcards: d[wildcards.sample]
+    output:
+        OD + 'qc/nanofilt/{sample}.fastq'
+    shell:
         "NanoFilt --headcrop 40 --tailcrop 20 --quality 11 {input} > {output} "
 
 rule kraken2:
-   input:
-       OD + 'qc/nanofilt/{sample}.fastq'
-   output:
-       OD + 'taxonomy/{sample}_output.txt'
-   log:
-       OD + 'log/{sample}_report.log'
-   shell:
-       "kraken2 --db {config['kraken_db']} --report {log} --output {output} {input}"
+    input:
+        OD + 'qc/nanofilt/{sample}.fastq'
+    output:
+        OD + 'taxonomy/{sample}_output.txt'
+    log:
+        OD + 'log/{sample}_report.log'
+    shell:
+        "kraken2 --db {config['kraken_db']} --report {log} --output {output} {input}"
 
 rule kraken_processing:
     input:
@@ -58,15 +72,24 @@ rule kraken_processing:
     output:
         '../pic/venn.png'
     shell:
-    "python scripts/proc_kraak_output.py {input.boven} {input.midden} {input.onder} {input.pacques}"
+        "python scripts/proc_kraak_output.py {input.boven} {input.midden} {input.onder} {input.pacques}"
 
 # human3 is a package in biobakery
 rule human3:
-   input:
-       OD + 'qc/nanofilt/{sample}.fastq'
-   output:
-       directory(OD + 'human3_2/{sample}')
-   shell:
-        "humann_databases --download chocophlan full {config["choco"]} && "
-        "humann_databases --download uniref uniref50_ec_filtered_diamond reduced {config["uniref"]} && "
+    input:
+        OD + 'qc/nanofilt/{sample}.fastq'
+    output:
+        directory(OD + 'human3_2/{sample}')
+    shell:
+        "humann_databases --download chocophlan full {config['choco']} && "
+        "humann_databases --download uniref uniref50_ec_filtered_diamond reduced {config['uniref']} && "
         "humann --input {input} --output {output} --nucleotide-database {config[choco]} --protein-database {config[uniref]} 2>human.txt"
+
+# fast 5 to pod5
+rule convert_to_pod5:
+    input:
+        fast5 = FAST5_DIRS[i] + "{sample}.fast5"
+    output:
+        pod5 = OUTPUT_POD5_DIRS[i] + "{sample}.pod5"
+    shell:
+        "pod5 convert fast5 {input.fast5} -o {output.pod5}"
