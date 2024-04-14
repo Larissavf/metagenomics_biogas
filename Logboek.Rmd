@@ -1,0 +1,312 @@
+---
+
+title: "Logboek"
+
+author: "Larissa, Marian, Sven"
+
+date: "`r Sys.Date()`"
+
+output: html_document
+
+editor_options:
+
+markdown:
+
+wrap: 72
+
+---
+# Logboek
+
+## Introductie:
+
+Dit logboek is samengesteld op basis van metagenomics onderzoek naar de inhoud van een Tricklebed reactor afkomstig van het …. lab. Dit onderzoek is in opdracht gedaan voor de onderzoekers van dit lab.
+
+Voor dit project is er onderzoek gedaan naar een methode om biogas te produceren. Dit wordt gedaan door het omzetten van biomassa in methaan met behulp van microben die zich bevinden in het rumen van koeien. Het rumen is het grootste gedeelte van de maag van een koe.
+
+Bij dit proces wordt vloeistof uit het rumen geëxtraheerd en samen met gras in een artificiële rumen reactor (ARR) gebracht. De microben die in de vloeistof afkomstig uit het rumen aanwezig zijn, produceren vervolgens vluchtige vetzuren (VFA's) middels fermentatie, een vorm van anaerobe respiratie. Anaerobe respiratie is een proces waarbij energie wordt geproduceerd in afwezigheid van zuurstof. Bij de fermentatie worden koolhydraten gedegradeerd tot VFA's;
+
+Deze VFA's worden geëxtraheerd uit de ARR en in een biogasreactor geplaatst waar de methaan productie door de aanwezige microben plaatsvindt.
+
+De productie van methaan wordt ook wel methanogenese genoemd. Deze microben gebruiken hiervoor waterstof en koolstofdioxide als substraten. De methanogenese reactie is een redoxreactie. Hierbij fungeert waterstof als de elektron donor en wordt deze geoxideerd. Koolstofdioxide wordt tijdens de reactie gereduceerd .
+
+Het geproduceerde methaan wordt vervolgens gezuiverd in een Tricklebed reactor (TBR). Naast de zuivering vindt er verdere methanogenese plaats. De methanogenese lijkt echter op sommige momenten te dalen​. Om de reden voor deze daling te achterhalen is er een metagenomics analyse uitgevoerd. Met metagenomics kan het genetisch materiaal van meerdere microben in een keer direct geanalyseerd worden. Hierdoor kan de focus gelegd worden op de functies, compositie en diversiteit van een gemeenschap aan microben, in plaats van het analyseren van individuele microben. Verder wordt metagenomics veel gebruikt omdat het de mogelijkheid biedt om microben die moeilijk of niet te kweken zijn toch te bestuderen​.
+
+### Onderzoeksvragen:
+
+De bacterieele community in deze reactor veranderd ook door de tijd, en dit heeft functionele gevolgen: soms valt de methaanproductie uit, of wordt de mix van, methaan en andere gassen verstoord. De vraag is dan of er iets te zien is aan de community op die momenten wat kan verklaren waarom de abiotische factoren veranderen.
+
+Een bijpassende onderzoeksvraag zou als volgt kunnen zijn:
+
+﻿﻿Wat is de samenstelling van de inhoud van de biogasreactor op 4 verschillende locaties, boven, midden, onder en het paques?
+
+﻿Op welke manier kan deze samenstelling de methaanproductie beïnvloeden?
+
+Om deze onderzoekensvragen te beantwoorden zijn de volgende stappen uitgevoerd:
+
+Stappen:
+
+- Quality control
+
+- Trimming
+
+- Taxonomic classification
+
+- Functional annotation
+
+- Basecalling
+
+- Visualisation
+
+Tools:
+
+- NanoQC v.0.9.4.)
+
+- NanoFilt v.2.8.0.
+
+- Kraken2 v.2.1.2.
+
+- bioBakery: human3 v3.9
+
+- convert_to_pod5
+
+- Dorado
+
+- Quality control & Trimming using Nanopack
+
+Voor de quality control en het trimmen van de reads zijn de tools NanoQC en NanoFilt tools gebruikt afkomstig van NanoPack. NanoPack bevat tools geschikt voor NanoPore data.
+
+### NanoQC 
+NanoQC is gebruikt om quality reports te genereren om op basis daarvan de reads te gaan trimmen. De NanoQC reports toonden aan dat de eerste 40 baseparen en de laatste 20 baseparen zeer slecht scoorden. Om deze reden is ervoor gekozen om met headcrop en tailcrop deze baseparen te verwijderen. Verder is er een minimum Phred score ingesteld van 15.Hiervoor is de volgende shell command gebruikt:
+
+NanoFilt --headcrop 40 --tailcrop 20 --quality 15 {input} > {output}'
+
+Taxonomic classification using Kraken2
+
+Voor het identificeren van de micro-organismen is de Kraken2 pipeline gebruikt. Deze pipeline is gekozen omdat de pipeline voor de classificatie zelf mapping uitvoert en het een database bevatte met referentie genomen voor zowel archaea als bacteriën. Ook genereert Kraken2 reports die als input kunnen worden gebruikt voor verschillende visualisatie tools.Hiervoor is de volgende command line gebruikt:
+
+kraken2 --db /data/datasets/KRAKEN2_INDEX/k2_standard_20231009/ --report {log} --output {output} {input}
+
+Functional profiling
+
+Voor de functional profiling van de micro-organismen is gebruikt gemaakt van de HUMAnN3 pipeline van bioBakery. Deze pipeline is gekozen omdat ook hier al mapping plaatsvindt en omdat deze geschikt is voor het voorspellen van de functies van microben aan de hand van pathways.
+
+### HUManN3 is met behulp van pip install geïnstalleerd omdat conda problemen gaf.
+
+HUManN3 maakt gebruik van de tool DIAMOND. Deze kon via deze link gedownload worden en moest vervolgens op dezelfde locatie als de snakefile gezet worden. Ook moest in .bashrc de path naar DIAMOND aangegeven worden.
+
+Voor de functional annotation maakt HUManN3 gebruik van databases. De tool gaf tijdens het runnen een error dat het de verkeerde databases had. Er is vervolgens gezocht naar de correcte databases. Een van de databases is met de volgende command geïnstalleerd:
+
+humann_databases --download chocophlan full {config["choco"]}
+
+De locatie van deze database werd meegegeven aan HUManN door --nucleotide-database <locatie database> te gebruiken.
+
+Er was ook nog een refseq database nodig voor de mapping stap in HUManN, maar omdat de database hierboven al 20 GB was, en HUManN met .sam en .bam files als input kan werken, werd ervoor gekozen om de mapping stap in HUManN zelf uit te voeren met behulp van Minimap2. Minimap2 was gekozen voor het mappen omdat het een geschikte tool is voor de langere reads afkomstig van de MinION.
+
+Minimap2 is met de volgende rule gerunned:
+
+### rule minimap2_sam:
+
+    input:
+
+        target= config['minimap_index'],
+
+        query= OD + 'qc/nanofilt/{sample}.fastq'
+
+    output:
+
+        OD + "aligned/{sample}_aln.sam"
+
+
+
+    log:
+
+        OD + "log/minimap2/{sample}.log"
+
+    shell:
+
+        'minimap2 -ax map-ont {input.target} {input.query} > {output}'
+
+Alleen we merkten zodra we HUManN vervolgens op deze output wilden gebruiken, deze lege outputs gaf. Dit kon er aan liggen dat de index die voor Minimap2 is gebruikt.
+
+De lege outputs hadden te maken met de verschillen van de index in Bowtie van HUManN en de index in Minimap2.
+
+Daardoor waren we overgestapt naar een andere mogelijkheid. Dus wel de mapping in HUMAnN te gebruiken. Hiervoor kon je een database meegeven doormiddel van --protein-database.
+
+We hadden een refseq versie gevonden die weinig geheugen nodig had, dus die hadden we gedownload met de volgende command:
+
+humann_databases --download uniref uniref50_ec_filtered_diamond reduced {config["uniref"]}
+
+Alleen deze kon hij niet vinden zodra we de locatie meegaven.
+
+En voor MetaPhlAn, er ook een database meegegeven worden doormiddel van --nucleotide-database.
+
+Alleen zodra wij deze meegaven nam MetaPhlAn toch nog de keuze om zelf een database te downloaden, alleen hiervoor was geen ruimte waar MetaPhlAn was geinstalleerd.
+
+En zodra hij het had gedownload kregen we de error dat het de verkeerde versie was. Dit was beide magisch opgelost zodra we beide databases in de zelfde map hadden geplaatst.
+
+Na dit geprutst werkte de tool op een test file. Zie /students/2023-2024/Thema07/biogas/test/ met het test bestand wat we hebben gebruikt en de output. daarvoor hadden we de volgende rule gebruikt:
+
+### rule human3:
+
+        input:
+
+            input_fasta = '/students/2023-2024/Thema07/biogas/test/demo.fastq.gz'
+
+        output:
+
+            "test/output10/"
+
+        shell:
+
+            """
+
+            humann_databases --download uniref uniref50_ec_filtered_diamond ../databases
+
+            humann --input '/students/2023-2024/Thema07/biogas/test/demo.fastq.gz' --output "test/output10/" --protein-database /students/2023-2024/Thema07/biogas/metaphlan/uniref --nucleotide-database /students/2023-2024/Thema07/biogas/metaphlan/chocophlan
+
+            """
+
+Alleen toen we het met onze eigen data deden kregen we een memory usage issue. Zie de volgende error die we kregen:
+
+Basecalling
+
+Visualisation
+
+Voor visualisatie was er het idee om bracken te gebruiken en daar vervolgens met gebruik van kraken-bracken een plot te maken.
+
+Hiervoor zijn de volgende rules opgesteld:
+
+### rule bracken:
+
+        input:
+
+            kraken = OD + 'log/{sample}_report.log',
+
+            KRAKEN_DB = '/data/datasets/KRAKEN2_INDEX/k2_standard_20231009/'
+
+        output:
+
+            OD + ' bracken/{sample}_bracken_out.tsv'
+
+        shell:
+
+            'bracken-build -d {input.KRAKEN_DB} -t 10 |'
+
+            'bracken -d {input.KRAKEN_DB} -i {input.kraken} -o {output}'
+
+
+
+### rule bracken_plot:
+
+        input:  
+
+            expand(OD + ' bracken/{sample}_bracken_out.tsv', sample=list(d.keys()))
+
+        output:
+
+            OD + 'visualisation/bracken.pdf'
+
+        shell:
+
+            'python ../Kraken-Bracken-plot-main/Kraken-Bracken-plot.py -o ../output.txt -i config/temp_input.txt'
+
+Bracken kon geïnstalleerd worden via conda, maar dan kon je vervolgens bracken niet vinden in je geinstalleerde tools.
+
+Je kon bracken ook installeren via de git repo. Alleen herkende die bracken-build toen niet.
+
+Overigens werd er gerealiseert dat er bij kraken-bracken_plot een stacked bar plot uit kwam en we dit liever niet hadden.
+
+Toen is er overgegaan naar het schrijven van een eigen script voor processen van de kraken_report.log output bij kraken2.
+
+Hierin hebben we verschillende plotjes gemaakt. Waarin alles gekeken wordt naar de top 10 organismen aanwezig in de samples.
+
+Zo worden verschillende samples met elkaar vergeleken met hun eigen top 10 en de top 10 met de overeenkomsten.
+
+### rule convert_to_pod5
+
+Geinstalleer met : pip install pod5
+
+Dit is om dorado basecaller beter te runnen.
+Hier word fast5 omgeschreven naar pod5 formaat.
+
+### Dorado.py 
+
+Waarom Dorado basecaller.
+De eerder verkregen data is van Guppy basecaller dat relatief oud is.
+Dorado doet het om schrijven van fast5 naar fastq nauwkeuriger.
+
+Er is gebruik gemaakt van dorado-0.5.3-linux-x64
+
+Losse script om dorado werkend te krijgen.
+
+Na verschillende errors is het niet gelukt om dorado in de pipline te krijgen.
+- CUDA error: out of memory
+
+Daarom heb ik verschillende dingen geprobeert:
+- batch size aanpassen
+- Door dorado voorgesteld oplossing
+- Eigen script
+
+Met --batchsize in de dorado command is er 64 meegegeven wat het laagst is.
+Met -I 4G Stelt een interne buffer groote aan. 4G is het laagste. 
+Om zo de memery min mogelijk te belasten.
+Met -x cuda:0 aangegeven welke cuda er gebruikt word om zo eventueel het probleem te verhelpen
+
+Cuda 0 lijkt meer memory te hebben.
+Dit is bekenen met behulp van: nvidia-smi -l 1 en nvitop
+
+Ook is er gebruik gemaakt van de minst vereisende model de fast in plaats van de sup.
+Wat niet optimaal is.
+
+
+Als de snake rule gebruikt dan maakte die elk sample tussen 0 en 98 procent af.  
+Om vervolgens de file te verwijderen of een 0 byte fastQ te maken  
+Dan gaf die een bash error. 
+Als er vervolgen sde  regel uitvoerde wat de error gaf deed die het los wel. 
+Daarom is er een simpel python script geschreven dat elk command los uitvoerd. 
+Dit leek het in eerste instantie ook niet te doen. 
+
+Toen is er verder gekeken naar de CUDA error: out of memory. 
+Eerst is er gekeken naar de graphice kaart of daar veel procces bezig waren. 
+Dit bleek niet het geval. 
+Er is eerst gebruik gemaakt van meerdere cores maar ook van 1.  
+Om zo te kijken of dat verschil maakt voor de memory. 
+
+Toen is er gebruikt gemaakt van export 'PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:(32, 64, 128, 512) 
+Hier heb ik verschillende de split gebruikt om te kijken of dat het probleem zou verhelpen. 
+Het leek het wel beter te doen maar nog steeds niet goed genoeg. 
+Elk sample werd nu wel gerund maar ook niet tot 100%. 
+
+Toen is er gebruik gemaakt van tourch dat met snakemake werkt. 
+Hier heb is dit command gebruikt torch.cuda.empty_cache() . 
+Hiervoor moet er wel eerst tourch worden geinstalleerd.  
+Dit is gedaan met: pip install torch.
+
+Dit staat script om de cache te leggen. 
+Dit verhielp het probleem ook niet. 
+
+Toen heb is er verder gezocht en gebruik gemaakt van TORCH_USE_CUDA_DSA=1 
+Wat het probleem ook niet verholp. 
+
+Nadat is het internet weer raad gepleegd. 
+
+Voor dat dorado gebruikt word export CUDA_LAUNCH_BLOCKING=1 uit te voeren. 
+Om de settings van cuda aan te passen.
+
+Toen is er ook gebruik gemaakt van  export CUDA_VISIBLE_DEVICES=1
+
+Na het zo goed als opgegeven te hebben en bij het schrijven van dit logboek om zo alle errors te reproduceren det het script het wel.
+Eerst als ik het script runde gaf die geen error maar 0 byte fastq files.
+Maar op het randje van opgeven deed die het wel.
+
+Het nadeel van het script is dat je niet gebruik kan maken van meerdere cores waardoor dat erg lang duurt.
+
+
+
+
+
+
+
+
+
+
